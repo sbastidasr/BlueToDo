@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('todosCtrl', function($scope,$rootScope,UserServices) {
+.controller('todosCtrl', function($scope, $rootScope) {
   var currentUser = Parse.User.current();
   //debugger;
   if (currentUser) {
@@ -8,6 +8,19 @@ angular.module('app.controllers', [])
   } else {
     // show the signup or login page
   }
+  $scope.items = [
+     { id: 1 , checked:true},
+     { id: 2 },
+     { id: 3 },
+     { id: 4 },
+     { id: 5 },
+     { id: 6 },
+     { id: 7 },
+     { id: 8 },
+     { id: 9 },
+     { id: 10 }
+   ];
+
 })
 
 .controller('newToDoCtrl', function($scope,$rootScope,DateService) {
@@ -21,18 +34,16 @@ angular.module('app.controllers', [])
     var asd=this.title;
     var des=this.description;
     var date=DateService.dateFromIndex(this.options.indexOf(this.hostSelected));
-    debugger;
 
     toDo.set('ditle', this.title);
     toDo.set('description', this.description);
     toDo.set('done', false);
     toDo.set('date', DateService.dateFromIndex(this.options.indexOf(this.hostSelected)));
-//Set user
+    //Set user
 
     toDo.save(null, {
       success: function(toDo) {
-
-        alert('New object created with objectId: ' + toDo.id);
+        window.history.back();
       },
       error: function(toDo, error) {
         alert('Failed to create new object, with error code: ' + error.message);
@@ -41,12 +52,12 @@ angular.module('app.controllers', [])
   }
 
   //$scope.showSelectValue = function(mySelect) {
-//    $scope.hostSelected =mySelect
-//  }
+  //    $scope.hostSelected =mySelect
+  //  }
 })
 
 
-.controller('loginCtrl', function($scope, $rootScope, UserServices, $state) {
+.controller('loginCtrl', function($scope, $rootScope, $state) {
   $scope.data = {};
   $scope.signupEmail = function(){
 
