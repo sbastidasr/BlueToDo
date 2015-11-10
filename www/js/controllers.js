@@ -1,13 +1,26 @@
 angular.module('app.controllers', [])
 
-.controller('signupCtrl', function($scope) {
+.controller('todosCtrl', function($scope,$rootScope,UserServices) {
+  var currentUser = Parse.User.current();
+  //debugger;
+  if (currentUser) {
+    //alert(currentUser.get('username'));
+  } else {
+      // show the signup or login page
+  }
+})
+
+.controller('newToDoCtrl', function($scope,$rootScope,UserServices) {
 
 })
 
-.controller('loginCtrl', function($scope, $state) {
+
+.controller('loginCtrl', function($scope, $rootScope, UserServices, $state) {
  $scope.data = {};
  $scope.signupEmail = function(){
-    alert('signups');
+
+
+
    //Create a new user on Parse
    var user = new Parse.User();
    user.set("username", $scope.data.email);
@@ -31,6 +44,8 @@ angular.module('app.controllers', [])
      success: function(user) {
        // Do stuff after successful login.
        console.log(user);
+       $rootScope.user = user;
+
        alert("success!");
      },
      error: function(user, error) {
