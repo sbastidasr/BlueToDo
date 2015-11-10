@@ -4,15 +4,30 @@ angular.module('app.services', [])
 
 }])
 
-.service('UserServices', [function(){
+.service('DateService', [function(){
 
-/*  this.user=null;
+this.dateFromIndex= function(index){
+  var today = new Date();
+ var tempDate =new Date();
+  tempDate.setDate(today.getDate() + index);
+  return tempDate;
+}
+  this.getFutureDates= function(){
+    var today = new Date();
+    //debugger;
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var dates=['Today', 'Tomorrow'];
 
-  this.setCurrentUser= function(usr){
-      this.user=usr;
-      alert("success!");
-  };
-  this.currentUser= function(){
-      return this.user;
-  };*/
+    for (var i=2; i<7; i++){
+      var tempDate =new Date();
+      tempDate.setDate(today.getDate() + i);
+      var dayString=days[tempDate.getDay()];
+      dayString+= ', '+ months[tempDate.getMonth()]+', '+tempDate.getDate();
+      dates.push(dayString);
+    }
+    return dates;
+  //  var month = months[ now.getMonth() ];
+ };
+
 }]);

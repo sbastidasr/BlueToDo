@@ -10,17 +10,39 @@ angular.module('app.controllers', [])
   }
 })
 
-.controller('newToDoCtrl', function($scope,$rootScope,UserServices) {
-  $scope.options = ['a','b','c'];
+.controller('newToDoCtrl', function($scope,$rootScope,DateService) {
+  $scope.options = DateService.getFutureDates();
+  //debugger;
   $scope.hostSelected = $scope.options[0];
 
   $scope.save=function(mySelect) {
-    console.log($scope.hostSelected)
+    var ToDo = Parse.Object.extend("ToDo");
+    var toDo = new ToDo();
+    var asd=this.title;
+    var des=this.description;
+    var date=DateService.dateFromIndex(this.options.indexOf(this.hostSelected));
+    debugger;
+
+    toDo.set('ditle', this.title);
+    toDo.set('description', this.description);
+    toDo.set('done', false);
+    toDo.set('date', DateService.dateFromIndex(this.options.indexOf(this.hostSelected)));
+//Set user
+
+    toDo.save(null, {
+      success: function(toDo) {
+
+        alert('New object created with objectId: ' + toDo.id);
+      },
+      error: function(toDo, error) {
+        alert('Failed to create new object, with error code: ' + error.message);
+      }
+    });
   }
 
-  $scope.showSelectValue = function(mySelect) {
-    $scope.hostSelected =mySelect
-  }
+  //$scope.showSelectValue = function(mySelect) {
+//    $scope.hostSelected =mySelect
+//  }
 })
 
 
