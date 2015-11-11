@@ -1,17 +1,21 @@
 angular.module('app.services', [])
 
-.factory('BlankFactory', [function(){
+.service('ToDoService', [function(){
+
 
 }])
 
 .service('DateService', [function(){
 
-this.dateFromIndex= function(index){
-  var today = new Date();
- var tempDate =new Date();
-  tempDate.setDate(today.getDate() + index);
-  return tempDate;
-}
+  this.dateFromIndex= function(index){
+    var today = new Date();
+    var tempDate = new Date();
+    tempDate.setDate(today.getDate() + index);
+    alert(tempDate.getDate());
+    return tempDate;
+
+  }
+
   this.getFutureDates= function(){
     var today = new Date();
     //debugger;
@@ -27,7 +31,7 @@ this.dateFromIndex= function(index){
       dates.push(dayString);
     }
     return dates;
-  //  var month = months[ now.getMonth() ];
- };
+    //  var month = months[ now.getMonth() ];
+  };
 
 }]);

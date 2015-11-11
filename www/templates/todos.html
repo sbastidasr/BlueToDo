@@ -1,18 +1,27 @@
 <ion-view title="ToDos">
   <ion-content padding="true" class="has-header">
-
-  
-
-    <ion-list show-delete="data.showDelete"  option-buttons="itemButtons">
-      <ion-item ng-repeat="item in items" item="item" class="item item-checkbox">
-        <label class="checkbox">
-          <input type="checkbox" ng-click="clickItem(item); $event.stopPropagation();" ng-model="item.checked">
+    <ion-list >
+      <ion-item ng-repeat="todo in todos | filter:{done: false}" class="item item-checkbox">
+        <label for="todo{{$index}}" class="checkbox">
+          <input id="todo{{$index}}" type="checkbox" ng-change="updateDoneState(todo)" ng-model="todo.done"/>
         </label>
-        Item {{ item.id }}
+        {{todo.text}}
+      </ion-item>
+    </ion-list>
+    <button onclick="window.location.href='#/newToDo'" class="button button-calm button-block ">Add ToDo</button>
+
+  <h3 ng-show="todosDone">Completed</h3>
+
+    <ion-list>
+      <ion-item ng-repeat="todo in todos | filter:{done: true}" class="item item-checkbox">
+        <label for="done{{$index}}" class="checkbox">
+          <input id="done{{$index}}" type="checkbox" ng-change="updateDoneState(todo)" ng-model="todo.done"/>
+        </label>
+        {{todo.text}}
       </ion-item>
     </ion-list>
 
-    <button href="#/newToDo"  class="button button-calm button-block ">Add ToDo</button>
+    <button  class="button button-stable button-block" ng-click="clearCompleted()">Clear completed</button>
 
 </ion-content>
 </ion-view>
