@@ -1,6 +1,7 @@
-<ion-view title="ToDos">
+<ion-view title="To Dos">
   <ion-content padding="true" class="has-header">
     <ion-list >
+        <ion-item class="item-divider">Pending</ion-item>
       <ion-item ng-repeat="todo in todos | filter:{done: false}" class="item item-checkbox">
         <label for="todo{{$index}}" class="checkbox">
           <input id="todo{{$index}}" type="checkbox" ng-change="updateDoneState(todo)" ng-model="todo.done"/>
@@ -12,8 +13,8 @@
 
     <div class="spacer" style="height: 40px;"></div>
 
-  <h3 ng-show="todosDone">Completed</h3>
     <ion-list>
+        <ion-item class="item-divider" ng-show="show()">Completed</ion-item>
       <ion-item ng-repeat="todo in todos | filter:{done: true}" class="item item-checkbox">
         <label for="done{{$index}}" class="checkbox">
           <input id="done{{$index}}" type="checkbox" ng-change="updateDoneState(todo)" ng-model="todo.done"/>
@@ -23,6 +24,14 @@
     </ion-list>
 
     <button ng-show="show()" class="button button-light button-block" ng-click="clearCompleted()">Clear completed</button>
+    <div class="spacer" style="height: 40px;"></div>
+
+    <button class="button button-light button-block" ng-click="logOut()">Log Out</button>
+
+
+
+
+
 
 </ion-content>
 </ion-view>

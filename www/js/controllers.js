@@ -1,6 +1,9 @@
 angular.module('app.controllers', [])
 
-.controller('todosCtrl', function($scope, ToDoService, $rootScope) {
+.controller('todosCtrl', function($scope,$window,$location,ToDoService, $rootScope) {
+  if(!Parse.User.current()){
+    $window.location.href = '#/login';
+  }
 
   //init
   var ToDo = Parse.Object.extend('ToDo');
@@ -22,7 +25,11 @@ angular.module('app.controllers', [])
       });
     }
   });
-
+  $scope.logOut=function(){
+    console.log('logout');
+    Parse.User.logOut();
+    $window.location.href = '#/logIn';
+  }
   $scope.updateDoneState = function(todo) {
     todo.cloudObject.set('done', todo.done);
     todo.cloudObject.save();
@@ -48,9 +55,17 @@ var ret=false;
       }
     });
   };
+
+
+
 })
 
-.controller('newToDoCtrl', function($scope,$rootScope,DateService) {
+.controller('newToDoCtrl', function($scope,$window,$rootScope,DateService) {
+  if(!Parse.User.current()){
+    $window.location.href = '#/login';
+
+  }
+
   $scope.options = DateService.getFutureDates();
   $scope.hostSelected = $scope.options[0];
 
@@ -58,7 +73,7 @@ var ret=false;
     var ToDo = Parse.Object.extend('ToDo');
     var todoItem = new ToDo();
     var date=DateService.dateFromIndex(this.options.indexOf(this.hostSelected));
-    alert(this.options.indexOf(this.hostSelected));
+    console.log(this.options.indexOf(this.hostSelected));
 
     todoItem.save(
       {
@@ -70,16 +85,23 @@ var ret=false;
       },
       {
         success: function(obj) {
-            window.history.back();
+            $window.location.href = '#/todos';
+            $window.location.reload();
         }
       })
     }
+
   })
 
-  .controller('loginCtrl', function($scope, $rootScope, $state) {
+  .controller('loginCtrl', function($scope, $window, $location, $rootScope, $state) {
     $scope.data = {};
-    $scope.signupEmail = function(){
 
+    if(Parse.User.current()){
+      $window.location.href = '#/todos';
+      $window.location.reload();
+    }
+
+    $scope.signupEmail = function(){
       //Create a new user on Parse
       var user = new Parse.User();
       user.set('username', $scope.data.email);
@@ -88,36 +110,33 @@ var ret=false;
 
       user.signUp(null, {
         success: function(user) {
-          // Hooray! Let them use the app now.
-          alert('success!');
+            console.log('logged');
+            $window.location.href = '#/todos';
+            $window.location.reload();
         },
         error: function(user, error) {
           // Show the error message somewhere and let the user try again.
-          alert('Error: ' + error.code + ' ' + error.message);
+          console.log('Error: ' + error.code + ' ' + error.message);
         }
       });
     };
+
 
     $scope.loginEmail = function(){
       Parse.User.logIn($scope.data.email, $scope.data.password, {
         success: function(user) {
           // Do stuff after successful login.
           console.log(user);
-          $rootScope.user = user;
-
-          alert('success!');
+          console.log('logged');
+          $window.location.href = '#/todos';
+          $window.location.reload();
         },
         error: function(user, error) {
           // The login failed. Check error to see why.
-          alert('error!');
+          console.log('error!');
         }
       });
     };
 
-    // at the bottom of your controller
-    var init = function () {
 
-    };
-    // and fire it after definition
-    init();
   });

@@ -11,7 +11,7 @@ angular.module('app.services', [])
     var today = new Date();
     var tempDate = new Date();
     tempDate.setDate(today.getDate() + index);
-    alert(tempDate.getDate());
+    console.log(tempDate.getDate());
     return tempDate;
 
   }
