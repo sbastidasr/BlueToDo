@@ -27,6 +27,15 @@ angular.module('app.controllers', [])
     todo.cloudObject.set('done', todo.done);
     todo.cloudObject.save();
   }
+  $scope.show =function (){
+var ret=false;
+    angular.forEach($scope.todos, function(todo) {
+      if(todo.done) {
+        ret= true;
+    }
+  });
+    return ret;
+  }
 
   $scope.clearCompleted = function() {
     var tempToDos = $scope.todos;

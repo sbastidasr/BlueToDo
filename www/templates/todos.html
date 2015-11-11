@@ -10,8 +10,9 @@
     </ion-list>
     <button onclick="window.location.href='#/newToDo'" class="button button-calm button-block ">Add ToDo</button>
 
-  <h3 ng-show="todosDone">Completed</h3>
+    <div class="spacer" style="height: 40px;"></div>
 
+  <h3 ng-show="todosDone">Completed</h3>
     <ion-list>
       <ion-item ng-repeat="todo in todos | filter:{done: true}" class="item item-checkbox">
         <label for="done{{$index}}" class="checkbox">
@@ -21,7 +22,7 @@
       </ion-item>
     </ion-list>
 
-    <button  class="button button-stable button-block" ng-click="clearCompleted()">Clear completed</button>
+    <button ng-show="show()" class="button button-light button-block" ng-click="clearCompleted()">Clear completed</button>
 
 </ion-content>
 </ion-view>
